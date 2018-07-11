@@ -1,8 +1,9 @@
 cortex.h:44:20:cm_enable_interrupts	4	static
 cortex.h:54:20:cm_disable_interrupts	4	static
-comms.c:12:9:push	16	static
-comms.c:19:9:pop	16	static
-comms.c:27:6:comms_init	16	static
-comms.c:34:6:comms_new_sample	24	static
-comms.c:50:6:tx_callback	16	static
-comms.c:58:32:hid_control_request_class	24	static
+staticqueue.inl:6:9:push	16	static
+staticqueue.inl:13:9:pop	16	static
+comms.c:9:6:comms_init	16	static
+comms.c:17:6:exti4_isr	8	static
+comms.c:25:6:comms_new_sample	16	static
+comms.c:33:6:tx_callback	16	static
+comms.c:45:32:hid_control_request_class	24	static

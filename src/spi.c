@@ -45,5 +45,5 @@ void spi_modeSlow(struct spiHandle_t* spi){
 	spi_set_baudrate_prescaler(spi->spi, SPI_CR1_BR_FPCLK_DIV_128);
 }
 void spi_delay(){
-	delayUS_DWT(10);
+	delayUS_DWT(4);
 }

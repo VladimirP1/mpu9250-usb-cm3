@@ -11,18 +11,14 @@ int main(void)
     clk_setup();
 	led_setup();
 	spi_setup();
-	exti_setup();
 
 	//delayUS_DWT(1000);
 
 	usbd_device * usb = usb_init();
 	comms_init(usb);
-	mpuTask(spi_hnd);
+	mpu_start(&spi_hnd);
+
+	while(1);
 
 	return 0;
-}
-
-void exti4_isr(){
-	exti_reset_request(EXTI4);
-	gpio_toggle(GPIOD, GPIO14);
 }

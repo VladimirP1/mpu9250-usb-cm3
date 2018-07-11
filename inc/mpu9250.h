@@ -3,9 +3,12 @@
 #include "usb.h"
 #include "comms.h"
 
-void mpuTask(struct spiHandle_t spi);
-void mpu_init(struct spiHandle_t* spi);
-void mpu_reset_fifo(struct spiHandle_t* spi);
-void mpu_run(struct spiHandle_t* spi);
-uint16_t mpu_count(struct spiHandle_t* spi);
-void mpu_sendusb(uint8_t* data);
+#define BUF_SET_TIME(buf, time) \
+    buf[12] = time >> 24; \
+    buf[13] = time >> 16; \
+	buf[14] = time >> 8; \
+	buf[15] = time;
+
+void mpu_start(struct spiHandle_t *spi);
+void mpu_getsample();
+

@@ -160,7 +160,8 @@ static void hid_set_config(usbd_device *dev, uint16_t wValue)
 				USB_REQ_TYPE_STANDARD | USB_REQ_TYPE_INTERFACE,
 				USB_REQ_TYPE_TYPE | USB_REQ_TYPE_RECIPIENT,
 				hid_control_request);
-    if_started = 1;
+
+	usbd_ep_write_packet(dev, 0x81, usbd_control_buffer, 32);
 }
 
 
@@ -183,5 +184,6 @@ usbd_device * usb_init(void)
 }
 
 void otg_fs_isr(void){
+	usbd_poll(usbd_dev);
 	usbd_poll(usbd_dev);
 }
