@@ -1,0 +1,4 @@
+usb.c:128:39:hid_control_request	24	static
+usb.c:146:13:hid_set_config	24	static
+usb.c:167:15:usb_init	24	static
+usb.c:185:6:otg_fs_isr	8	static

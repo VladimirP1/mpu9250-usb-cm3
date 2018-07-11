@@ -1,0 +1,6 @@
+mpu9250.c:3:6:mpuTask	24	static
+mpu9250.c:17:6:mpu_sendusb	16	static
+mpu9250.c:21:6:mpu_init	16	static
+mpu9250.c:35:6:mpu_reset_fifo	24	static
+mpu9250.c:50:6:mpu_run	24	static
+mpu9250.c:68:10:mpu_count	16	static

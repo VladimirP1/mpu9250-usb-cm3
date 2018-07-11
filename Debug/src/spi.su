@@ -1,0 +1,9 @@
+spi.c:3:9:spi_read_reg	24	static
+spi.c:10:9:spi_read_reg_d	24	static
+spi.c:15:6:spi_write_reg	16	static
+spi.c:21:6:spi_write_reg_d	16	static
+spi.c:25:10:spi_read_reg16	32	static
+spi.c:33:6:spi_read_reg_burst	40	static
+spi.c:41:6:spi_modeFast	16	static
+spi.c:44:6:spi_modeSlow	16	static
+spi.c:47:6:spi_delay	8	static

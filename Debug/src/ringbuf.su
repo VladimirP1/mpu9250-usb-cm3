@@ -1,0 +1,6 @@
+cortex.h:44:20:cm_enable_interrupts	4	static
+cortex.h:54:20:cm_disable_interrupts	4	static
+ringbuf.c:3:9:ringbuf_init	24	static
+ringbuf.c:11:10:ringbuf_len	24	static
+ringbuf.c:18:9:ringbuf_enqueue	16	static
+ringbuf.c:33:9:ringbuf_dequeue	16	static
