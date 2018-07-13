@@ -36,6 +36,8 @@ void mpu_init(struct spiHandle_t* spi){
     spi_write_reg_d(spi, 0x23, 0x78); // FIFO setup
     spi_write_reg_d(spi, 0x37, 0x30); // int setup
     spi_write_reg_d(spi, 0x38, 0x01); // Data interrupt
+    // +- 2 G
+    // +- 250 dps
     mpu_reset_fifo(spi);
 }
 
@@ -56,16 +58,14 @@ void mpu_reset_fifo(struct spiHandle_t* spi) {
 
 void mpu_getsample(){
 	uint32_t time = dwt_read_cycle_counter();
-	spi_delay();
 	uint8_t n = mpu_count(g_spi)/12;
 	for(int i = 0 ; i < n; i++) {
 		spi_delay();
 		spi_read_reg_burst(g_spi, 0x74, 12, buf);
-		BUF_SET_TIME(buf, time);
+		BUF_SET_TIME(buf, time, 12);
 		mpu_sendusb(buf);
 		spi_delay();
 	}
-	delayUS_DWT(4);
 	if(n > 39){
 		//gpio_set(GPIOD, GPIO13);
 		//delayMS_DWT(1000);

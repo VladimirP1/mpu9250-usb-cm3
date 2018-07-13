@@ -49,8 +49,26 @@ static const uint8_t hid_report_descriptor[] = {
 		0x95, 0x20,                    //   REPORT_COUNT (32)
 		0x09, 0x00,                    //   USAGE (Undefined)
 		0x82, 0x02, 0x01,              //   INPUT (Data,Var,Abs,Buf)
+		0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
+		0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+		0x75, 0x08,                    //   REPORT_SIZE (8)
+		0x95, 0x04,                    //   REPORT_COUNT (4)
+		0x09, 0x00,                    //   USAGE (Undefined)
+		0xb2, 0x02, 0x01,              //   FEATURE (Data,Var,Abs,Buf)
 		0xc0                           // END_COLLECTION
 };
+
+/*		0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
+		0x09, 0x01,                    // USAGE (Vendor Usage 1)
+		0xa1, 0x01,                    // COLLECTION (Application)
+		0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
+		0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+		0x75, 0x08,                    //   REPORT_SIZE (8)
+		0x95, 0x20,                    //   REPORT_COUNT (32)
+		0x09, 0x00,                    //   USAGE (Undefined)
+		0x82, 0x02, 0x01,              //   INPUT (Data,Var,Abs,Buf)
+		0xc0                           // END_COLLECTION
+};*/
 
 static const struct {
 	struct usb_hid_descriptor hid_descriptor;
@@ -170,20 +188,34 @@ usbd_device * usb_init(void)
 	rcc_periph_clock_enable(RCC_GPIOA);
 	rcc_periph_clock_enable(RCC_OTGFS);
 
-	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO11 | GPIO12);
-	gpio_set_af(GPIOA, GPIO_AF10, GPIO11 | GPIO12);
+	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO8 | GPIO11 | GPIO12);
+	gpio_set_af(GPIOA, GPIO_AF10, GPIO8 | GPIO11 | GPIO12);
 
 	usbd_dev = usbd_init(&otgfs_usb_driver, &dev_descr, &config, usb_strings, 3, usbd_control_buffer, sizeof(usbd_control_buffer));
 	usbd_register_set_config_callback(usbd_dev, hid_set_config);
 
+	OTG_FS_GCCFG |= (1<<20);
+
 	// Low priority
-	nvic_set_priority(NVIC_OTG_FS_IRQ, 0x11);
-    nvic_enable_irq(NVIC_OTG_FS_IRQ);
+	//OTG_FS_GINTMSK |= (1<<29) | (1<<12) | (1<<3);
+	//nvic_set_priority(NVIC_OTG_FS_IRQ, 0x11);
+    //nvic_enable_irq(NVIC_OTG_FS_IRQ);
+
+
+	/*systick_set_clocksource(STK_CSR_CLKSOURCE_AHB_DIV8);
+	systick_set_reload(7499);
+	systick_interrupt_enable();
+	systick_counter_enable();*/
 
 	return usbd_dev;
 }
 
-void otg_fs_isr(void){
+/*void otg_fs_isr(void){
+	cm_disable_interrupts();
 	usbd_poll(usbd_dev);
-	usbd_poll(usbd_dev);
-}
+	OTG_FS_GINTSTS = 0;
+	cm_enable_interrupts();
+}*/
+/*void sys_tick_handler(void) {
+	otg_fs_isr();
+}*/

@@ -18,7 +18,9 @@ int main(void)
 	comms_init(usb);
 	mpu_start(&spi_hnd);
 
-	while(1);
+	while(1) {
+		usbd_poll(usb);
+	}
 
 	return 0;
 }

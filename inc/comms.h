@@ -4,13 +4,8 @@
 #include <string.h>
 
 struct params_t{
-    int16_t acc_ofsx;
-    int16_t acc_ofsy;
-    int16_t acc_ofsz;
-    int16_t gyr_ofsx;
-    int16_t gyr_ofsy;
-    int16_t gyr_ofsz;
-};
+    uint32_t timestamp;
+} /*__attribute__((packed, aligned(1)))*/;
 extern struct params_t params;
 
 void comms_init(usbd_device * usb);

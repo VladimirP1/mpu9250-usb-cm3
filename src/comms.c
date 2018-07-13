@@ -48,13 +48,14 @@ enum usbd_request_return_codes hid_control_request_class(usbd_device *dev, struc
 	(void)complete;
 	(void)dev;
 	if((req->bRequest == USB_REQ_GET_REPORT) && USB_VAL_IS_FEATURE(req->wValue)) {
-		//gpio_set(GPIOD, GPIO13);
+		uint32_t time = dwt_read_cycle_counter();
+		// We want little endian here to be consistent with other data
+		BUF_SET_TIME((uint8_t*) &params.timestamp, time, 0);
 		*buf = (uint8_t*) &params;
 		*len = sizeof(struct params_t);
 		return USBD_REQ_HANDLED;
 	}
 	if((req->bRequest == USB_REQ_SET_REPORT) && USB_VAL_IS_FEATURE(req->wValue)) {
-		//gpio_set(GPIOD, GPIO13);
 		memcpy(&params, *buf, sizeof(params));
 		*buf = (uint8_t*) &params;
 		*len = 0;
