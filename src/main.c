@@ -9,10 +9,11 @@ struct spiHandle_t spi_hnd = {.spi = SPI1, .cs_port = GPIOA, .cs_pin = GPIO4};
 int main(void)
 {
     clk_setup();
+
+	delayMS_DWT(1000);
+
 	led_setup();
 	spi_setup();
-
-	//delayUS_DWT(1000);
 
 	usbd_device * usb = usb_init();
 	comms_init(usb);

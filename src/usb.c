@@ -188,13 +188,11 @@ usbd_device * usb_init(void)
 	rcc_periph_clock_enable(RCC_GPIOA);
 	rcc_periph_clock_enable(RCC_OTGFS);
 
-	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO8 | GPIO11 | GPIO12);
-	gpio_set_af(GPIOA, GPIO_AF10, GPIO8 | GPIO11 | GPIO12);
+	gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO11 | GPIO12);
+	gpio_set_af(GPIOA, GPIO_AF10, GPIO11 | GPIO12);
 
 	usbd_dev = usbd_init(&otgfs_usb_driver, &dev_descr, &config, usb_strings, 3, usbd_control_buffer, sizeof(usbd_control_buffer));
 	usbd_register_set_config_callback(usbd_dev, hid_set_config);
-
-	OTG_FS_GCCFG |= (1<<20);
 
 	// Low priority
 	//OTG_FS_GINTMSK |= (1<<29) | (1<<12) | (1<<3);

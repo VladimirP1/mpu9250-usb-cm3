@@ -5,5 +5,5 @@ staticqueue.inl:13:9:pop	16	static
 comms.c:9:6:comms_init	16	static
 comms.c:17:6:exti4_isr	8	static
 comms.c:25:6:comms_new_sample	16	static
-comms.c:33:6:tx_callback	16	static
-comms.c:45:32:hid_control_request_class	32	static
+comms.c:32:6:tx_callback	16	static
+comms.c:46:32:hid_control_request_class	32	static

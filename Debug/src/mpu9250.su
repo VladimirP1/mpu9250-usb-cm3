@@ -1,6 +1,6 @@
 mpu9250.c:10:6:mpu_start	16	static
 mpu9250.c:22:6:mpu_sendusb	16	static
 mpu9250.c:28:6:mpu_init	16	static
-mpu9250.c:44:6:mpu_reset_fifo	24	static
-mpu9250.c:59:6:mpu_getsample	24	static
-mpu9250.c:77:10:mpu_count	16	static
+mpu9250.c:48:6:mpu_reset_fifo	24	static
+mpu9250.c:63:6:mpu_getsample	24	static
+mpu9250.c:82:10:mpu_count	16	static

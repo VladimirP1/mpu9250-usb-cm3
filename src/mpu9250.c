@@ -30,11 +30,15 @@ void mpu_init(struct spiHandle_t* spi){
     delayUS_DWT(5000);
     spi_write_reg_d(spi, 0x6B, 1); // Power up
     spi_write_reg_d(spi, 0x6c, 0); // Enable all sensors, all axes
+
+    spi_write_reg_d(spi, 0x1b, 3 << 3); // Gyro scale
+    spi_write_reg_d(spi, 0x1c, 1 << 3); // Accel scale
+
     spi_write_reg_d(spi, 0x19, 0); //
     spi_write_reg_d(spi, 0x1a, 0x01); // DLPF
     spi_write_reg_d(spi, 0x1d, 0x01); // -||-
     spi_write_reg_d(spi, 0x23, 0x78); // FIFO setup
-    spi_write_reg_d(spi, 0x37, 0x30); // int setup
+    spi_write_reg_d(spi, 0x37, 0x20); // int setup
     spi_write_reg_d(spi, 0x38, 0x01); // Data interrupt
     // +- 2 G
     // +- 250 dps
@@ -58,6 +62,7 @@ void mpu_reset_fifo(struct spiHandle_t* spi) {
 
 void mpu_getsample(){
 	uint32_t time = dwt_read_cycle_counter();
+	spi_read_reg_d(g_spi, 0x3a); // Reset int status
 	uint8_t n = mpu_count(g_spi)/12;
 	for(int i = 0 ; i < n; i++) {
 		spi_delay();

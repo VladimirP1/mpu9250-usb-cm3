@@ -3,7 +3,7 @@
 
 usbd_device * usb;
 struct params_t params;
-
+volatile uint64_t cnt = 0;
 //void apply_offsets(int16_t* buf);
 
 void comms_init(usbd_device * usbd){
@@ -24,7 +24,6 @@ void exti4_isr(){
 // Data has been read out, push it into FIFO
 void comms_new_sample(uint8_t* buf){
 	//apply_offsets((int16_t*) buf);
-	cm_disable_interrupts();
 	push(buf);
 	cm_enable_interrupts();
 }
@@ -36,6 +35,8 @@ void tx_callback(usbd_device *usbd_dev, uint8_t ep){
 	memset(localbuf, 0, 32);
 	cm_disable_interrupts();
 	pop(localbuf);
+	cm_enable_interrupts();
+	cm_disable_interrupts();
 	pop(localbuf + 16);
 	cm_enable_interrupts();
 	usbd_ep_write_packet(usb, 0x81, localbuf, 32);
